@@ -9,6 +9,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -44,4 +45,10 @@ tasks {
   publishPlugin {
     token.set(System.getenv("PUBLISH_TOKEN"))
   }
+}
+
+
+dependencies {
+  implementation("org.antlr:antlr4-intellij-adaptor:0.1")
+  implementation("rs.ac.bg.sm203134m:tup-grammar:1.0-SNAPSHOT")
 }
