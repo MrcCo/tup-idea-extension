@@ -31,6 +31,7 @@
             language="TupLanguage"
             extensions="tup"/>
     <lang.parserDefinition language="TupLanguage" implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.TupParserDefinition" />
+    <lang.syntaxHighlighterFactory language="TupLanguage" implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.TupSyntaxHighlighterFactory" />
 
   </extensions>
 </idea-plugin>

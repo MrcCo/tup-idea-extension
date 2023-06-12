@@ -25,7 +25,6 @@ import rs.ac.bg.etf.sm203134m.tupideaextension.file.TupFile
 
 class TupParserDefinition : ParserDefinition {
 
-    private val tokenElementTypes = PSIElementTypeFactory.getTokenIElementTypes(TupLanguage.INSTANCE)
 
     companion object {
         val FILE = IFileElementType(TupLanguage.INSTANCE)
@@ -38,7 +37,7 @@ class TupParserDefinition : ParserDefinition {
             TupParser.ruleNames
         )
     }
-
+    val tokenElementTypes = PSIElementTypeFactory.getTokenIElementTypes(TupLanguage.INSTANCE)
 
 
     override fun createLexer(project: Project): Lexer {
@@ -83,6 +82,7 @@ class TupParserDefinition : ParserDefinition {
     private fun getTokenElementType(@MagicConstant(valuesFromClass = TupLexer::class) tokenIndex: Int): TokenIElementType? {
         return tokenElementTypes[tokenIndex]
     }
+
 
 
 }
