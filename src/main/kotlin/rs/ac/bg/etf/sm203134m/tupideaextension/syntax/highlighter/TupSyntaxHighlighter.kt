@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.sm203134m.tupideaextension.syntax
+package rs.ac.bg.etf.sm203134m.tupideaextension.syntax.highlighter
 
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors

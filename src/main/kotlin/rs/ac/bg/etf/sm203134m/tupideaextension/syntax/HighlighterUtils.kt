@@ -17,9 +17,14 @@ object TupLanguageTokenType {
         )
     }
 
+    private val RULE_ELEMENT_TYPES = PSIElementTypeFactory.getRuleIElementTypes(TupLanguage.INSTANCE)
     private val TOKEN_ELEMENT_TYPES = PSIElementTypeFactory.getTokenIElementTypes(TupLanguage.INSTANCE)
 
     fun getTokenElementType(@MagicConstant(valuesFromClass = TupLexer::class) tokenIndex: Int): TokenIElementType {
         return TOKEN_ELEMENT_TYPES[tokenIndex]
+    }
+
+    fun getRuleElementType(@MagicConstant(valuesFromClass = TupParser::class) ruleIndex: Int): RuleIElementType {
+        return RULE_ELEMENT_TYPES[ruleIndex]
     }
 }
