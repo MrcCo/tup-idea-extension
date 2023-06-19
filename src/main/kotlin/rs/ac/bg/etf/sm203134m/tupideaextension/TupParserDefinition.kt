@@ -63,7 +63,10 @@ class TupParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet {
         val stringType = getTokenElementType(TupLexer.STRING)
-        return TokenSet.create(stringType)
+        val stringStart = getTokenElementType(TupLexer.STRING_START)
+        val stringEnd = getTokenElementType(TupLexer.STRING_END)
+        val stringText = getTokenElementType(TupLexer.TEXT)
+        return TokenSet.create(stringType, stringStart, stringEnd, stringText)
     }
 
     override fun createElement(node: ASTNode): PsiElement {

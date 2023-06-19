@@ -41,7 +41,7 @@ class TupSyntaxHighlighter : SyntaxHighlighterBase() {
         TupLexer.STEPS
     ).map { getTokenElementType(it) }
 
-    private val stringTokenTypes = listOf(TupLexer.STRING).map { getTokenElementType(it) }
+    private val stringTokenTypes = listOf(TupLexer.STRING, TupLexer.STRING_START, TupLexer.STRING_END, TupLexer.TEXT).map { getTokenElementType(it) }
 
     private val identifierTokenTypes = listOf(
         TupLexer.IDENTIFIER,
