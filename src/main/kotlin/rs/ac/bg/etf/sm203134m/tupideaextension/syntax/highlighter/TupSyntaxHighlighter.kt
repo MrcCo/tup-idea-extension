@@ -12,7 +12,7 @@ import com.intellij.psi.tree.IElementType
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import rs.ac.bg.etf.sm203134m.antlr4.TupLexer
 import rs.ac.bg.etf.sm203134m.tupideaextension.TupLanguage
-import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.TupLanguageTokenType.getTokenElementType
+import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.PSIElementInitializer.getTokenElementType
 
 class TupSyntaxHighlighter : SyntaxHighlighterBase() {
 
@@ -37,16 +37,18 @@ class TupSyntaxHighlighter : SyntaxHighlighterBase() {
         TupLexer.TEST,
         TupLexer.NAME,
         TupLexer.DESCRIPTION,
-        TupLexer.TYPE,
         TupLexer.STEPS
     ).map { getTokenElementType(it) }
 
-    private val stringTokenTypes = listOf(TupLexer.STRING, TupLexer.STRING_START, TupLexer.STRING_END, TupLexer.TEXT).map { getTokenElementType(it) }
+    private val stringTokenTypes = listOf(
+        TupLexer.STRING,
+        TupLexer.STRING_START,
+        TupLexer.STRING_END,
+        TupLexer.TEXT
+    ).map { getTokenElementType(it) }
 
     private val identifierTokenTypes = listOf(
         TupLexer.IDENTIFIER,
-        TupLexer.UI,
-        TupLexer.API
     ).map { getTokenElementType(it) }
 
     override fun getHighlightingLexer(): Lexer {

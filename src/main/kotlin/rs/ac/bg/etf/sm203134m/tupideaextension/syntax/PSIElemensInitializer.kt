@@ -8,7 +8,7 @@ import rs.ac.bg.etf.sm203134m.antlr4.TupLexer
 import rs.ac.bg.etf.sm203134m.antlr4.TupParser
 import rs.ac.bg.etf.sm203134m.tupideaextension.TupLanguage
 
-object TupLanguageTokenType {
+object PSIElementInitializer {
     init {
         PSIElementTypeFactory.defineLanguageIElementTypes(
             TupLanguage.INSTANCE,

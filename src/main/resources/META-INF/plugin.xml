@@ -34,6 +34,15 @@
     <lang.syntaxHighlighterFactory language="TupLanguage" implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.highlighter.TupSyntaxHighlighterFactory" />
     <annotator
             language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.UniqueNameAnnotator"/>
+            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.UniqueNameAnnotator"/>
+    <annotator
+            language="TupLanguage"
+            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.HttpMethodAnnotator"/>
+    <annotator
+            language="TupLanguage"
+            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.StatusCodeAnnotator"/>
+    <annotator
+            language="TupLanguage"
+            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.AssertionsBeforeRequestAnnotator"/>
   </extensions>
 </idea-plugin>
