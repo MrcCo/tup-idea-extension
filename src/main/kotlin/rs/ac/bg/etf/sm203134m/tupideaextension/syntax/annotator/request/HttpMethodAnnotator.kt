@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator
+package rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request
 
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
 import com.intellij.codeInspection.ProblemHighlightType

@@ -51,4 +51,5 @@ tasks {
 dependencies {
   implementation("org.antlr:antlr4-intellij-adaptor:0.1")
   implementation("rs.ac.bg.sm203134m:tup-grammar:1.0-SNAPSHOT")
+  implementation("commons-validator:commons-validator:1.7")
 }

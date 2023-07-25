@@ -5,12 +5,10 @@ import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
-import com.intellij.psi.util.elementType
-import rs.ac.bg.etf.sm203134m.antlr4.TupLexer
 import rs.ac.bg.etf.sm203134m.antlr4.TupParser
 import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.PSIElementInitializer
 
-class AssertionsBeforeRequestAnnotator: Annotator {
+class AssertionsBeforeRequestAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
 
         if (PSIElementInitializer.getRuleElementType(TupParser.RULE_testSteps) == element.node.elementType) {
@@ -18,16 +16,28 @@ class AssertionsBeforeRequestAnnotator: Annotator {
             var requestMade = false
             for (it in element.node.getChildren(TokenSet.create(PSIElementInitializer.getRuleElementType(TupParser.RULE_step)))) {
 
-                if(it.text.startsWith("assert", true) && !requestMade) {
+                val isRequestAssertion = it.getChildren(
+                    TokenSet.create(
+                        PSIElementInitializer.getRuleElementType(TupParser.RULE_assertResponseCode),
+                        PSIElementInitializer.getRuleElementType(TupParser.RULE_assertResponseBody),
+                        PSIElementInitializer.getRuleElementType(TupParser.RULE_assertResponseBodyContainsField)
+                    )
+                ).isNotEmpty()
+
+
+                if (isRequestAssertion && !requestMade) {
                     holder.newAnnotation(HighlightSeverity.ERROR, "Assertion done without a request!")
                         .range(it.textRange)
                         .create()
                 }
 
+                val isRequest = it.getChildren(
+                    TokenSet.create(
+                        PSIElementInitializer.getRuleElementType(TupParser.RULE_executeApiRequest),
+                    )
+                ).isNotEmpty()
 
-                it.getPsi()
-
-                if(it.text.startsWith("execute", true)) {
+                if (isRequest) {
                     requestMade = true
                 }
 
