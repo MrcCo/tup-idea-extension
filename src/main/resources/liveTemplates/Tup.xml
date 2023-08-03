@@ -1,0 +1,29 @@
+<templateSet group="tup">
+    <template name="ui-test"
+              value="Test name: UITest.&#10;Test description: &quot;&quot;.&#10;Test steps:&#10;  Open web page: &quot;&quot;.&#10;  Assert that current page is &quot;&quot;."
+              description="Basic UI test" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="ui-tup" value="true"/>
+        </context>
+    </template>
+
+    <template name="api-test"
+              value="Test name: $TEST_NAME$.&#10;Test description: &quot;$DESCRIPTION$&quot;.&#10;Test steps:&#10;    Execute an api request to: $HTTP_METHOD$ &quot;$URL$&quot; with headers [ {&quot;$H_KEY$&quot; : &quot;$H_VALUE$&quot;} ] with body &quot;$BODY$&quot;.&#10;    Assert that last response has status code: $CODE$.&#10;    Assert that last response body is: &quot;$RES_BODY$&quot;.&#10;    Assert that last response body  has field: &quot;$R_FIELD$&quot; with value: &quot;$R_VALUE$&quot;."
+              description="Basic API test" toReformat="false" toShortenFQNames="true">
+        <variable name="TEST_NAME" expression="camelCase(fileNameWithoutExtension())" defaultValue="" alwaysStopAt="true"/>
+        <variable name="DESCRIPTION" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="HTTP_METHOD" expression="enum(&quot;POST&quot;,&quot;GET&quot;,&quot;PATCH&quot;, &quot;PUT&quot;, &quot;DELETE&quot;)" defaultValue="" alwaysStopAt="true"/>
+        <variable name="URL" expression="&quot;https://your-api.api.com&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="H_KEY" expression="&quot;key&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="H_VALUE" expression="&quot;value&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="BODY" expression="&quot;{}&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="CODE" expression="&quot;200&quot;" defaultValue="" alwaysStopAt="true"/>
+        <variable name="RES_BODY" expression="&quot;{}&quot;" defaultValue="{}" alwaysStopAt="true"/>
+        <variable name="R_FIELD" expression="&quot;field&quot;" defaultValue="field" alwaysStopAt="true"/>
+        <variable name="R_VALUE" expression="&quot;value&quot;" defaultValue="value" alwaysStopAt="true"/>
+        <context>
+            <option name="api-tup" value="true"/>
+        </context>
+    </template>
+
+</templateSet>

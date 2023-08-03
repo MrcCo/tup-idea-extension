@@ -31,6 +31,11 @@ class TupSyntaxHighlighter : SyntaxHighlighterBase() {
             "TUP.IDENTIFIER",
             DefaultLanguageHighlighterColors.CONSTANT // this highlighting feels better
         )
+
+        val TUP_INTEGER = TextAttributesKey.createTextAttributesKey(
+            "TUP.INTEGER",
+            DefaultLanguageHighlighterColors.NUMBER
+        )
     }
 
     private val keywordTokenTypes = listOf(
@@ -51,6 +56,10 @@ class TupSyntaxHighlighter : SyntaxHighlighterBase() {
         TupLexer.IDENTIFIER,
     ).map { getTokenElementType(it) }
 
+    private val integerTokenTypes = listOf(
+        TupLexer.INTEGER
+    ).map { getTokenElementType(it) }
+
     override fun getHighlightingLexer(): Lexer {
         return ANTLRLexerAdaptor(TupLanguage.INSTANCE, TupLexer(null))
     }
@@ -62,6 +71,8 @@ class TupSyntaxHighlighter : SyntaxHighlighterBase() {
             arrayOf(TUP_STRING)
         } else if (identifierTokenTypes.contains(tokenType)) {
             arrayOf(TUP_IDENTIFIER)
+        } else if (integerTokenTypes.contains(tokenType)) {
+            arrayOf(TUP_INTEGER)
         } else {
             emptyArray()
         }

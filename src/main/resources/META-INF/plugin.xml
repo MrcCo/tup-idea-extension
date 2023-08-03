@@ -1,55 +1,60 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-  <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-  <id>rs.ac.bg.etf.sm203134m.tup-idea-extension</id>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>rs.ac.bg.etf.sm203134m.tup-idea-extension</id>
 
-  <!-- Public plugin name should be written in Title Case.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-  <name>Tup IDEA Extension</name>
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Tup IDEA Extension</name>
 
-  <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor email="markostefanovic2801@gmail.com" url="https://www.yourcompany.com">MrcCo</vendor>
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="markostefanovic2801@gmail.com" url="https://www.yourcompany.com">MrcCo</vendor>
 
-  <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-       Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-  <description><![CDATA[
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
     Plugin for TUP language developed for a master thesis on ETF Belgrade
   ]]></description>
 
-  <!-- Product and plugin compatibility requirements.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
-  <depends>com.intellij.modules.platform</depends>
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
 
-  <!-- Extension points defined by the plugin.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
-  <extensions defaultExtensionNs="com.intellij">
-    <fileType
-            name="Tup File"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.file.TupFileType"
-            fieldName="INSTANCE"
-            language="TupLanguage"
-            extensions="tup"/>
-    <lang.parserDefinition language="TupLanguage" implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.TupParserDefinition" />
-    <lang.syntaxHighlighterFactory language="TupLanguage" implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.highlighter.TupSyntaxHighlighterFactory" />
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.UniqueNameAnnotator"/>
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.HttpMethodAnnotator"/>
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.StatusCodeAnnotator"/>
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.AssertionsBeforeRequestAnnotator"/>
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.UrlValidationAnnotator"/>
-    <annotator
-            language="TupLanguage"
-            implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.RequestBodyAnnotator"/>
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType
+                name="Tup File"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.file.TupFileType"
+                fieldName="INSTANCE"
+                language="TupLanguage"
+                extensions="tup"/>
+        <lang.parserDefinition language="TupLanguage"
+                               implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.TupParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="TupLanguage"
+                                       implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.highlighter.TupSyntaxHighlighterFactory"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.UniqueNameAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.HttpMethodAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.StatusCodeAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.AssertionsBeforeRequestAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.UrlValidationAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.RequestBodyAnnotator"/>
 
-  </extensions>
+        <defaultLiveTemplates file="/liveTemplates/Tup.xml"/>
+        <liveTemplateContext implementation="rs.ac.bg.etf.sm203134m.tupideaextension.template.UITestTemplate"/>
+        <liveTemplateContext implementation="rs.ac.bg.etf.sm203134m.tupideaextension.template.ApiTestTemplate"/>
+    </extensions>
 </idea-plugin>
