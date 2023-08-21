@@ -1,14 +1,15 @@
 <templateSet group="tup">
     <template name="ui-test"
-              value="Test name: UITest.&#10;Test description: &quot;&quot;.&#10;Test steps:&#10;  Open web page: &quot;&quot;.&#10;  Assert that current page is &quot;&quot;."
+              value="Test name: UITest.&#10;Test description: &quot;&quot;.&#10;Test steps:&#10;  Open web page: &quot;$PAGE$&quot;.&#10;"
               description="Basic UI test" toReformat="false" toShortenFQNames="true">
+        <variable name="PAGE" expression="&quot;https://your.page.com&quot;" defaultValue="" alwaysStopAt="true"/>
         <context>
             <option name="ui-tup" value="true"/>
         </context>
     </template>
 
     <template name="api-test"
-              value="Test name: $TEST_NAME$.&#10;Test description: &quot;$DESCRIPTION$&quot;.&#10;Test steps:&#10;    Execute an api request to: $HTTP_METHOD$ &quot;$URL$&quot; with headers [ {&quot;$H_KEY$&quot; : &quot;$H_VALUE$&quot;} ] with body &quot;$BODY$&quot;.&#10;    Assert that last response has status code: $CODE$.&#10;    Assert that last response body is: &quot;$RES_BODY$&quot;.&#10;    Assert that last response body  has field: &quot;$R_FIELD$&quot; with value: &quot;$R_VALUE$&quot;."
+              value="Test name: $TEST_NAME$.&#10;Test description: &quot;$DESCRIPTION$&quot;.&#10;Test steps:&#10;    Execute an api request to: $HTTP_METHOD$ &quot;$URL$&quot; with headers [ {&quot;$H_KEY$&quot; : &quot;$H_VALUE$&quot;} ] with body '$BODY$'.&#10;    Assert that last response has status code: $CODE$.&#10;    Assert that last response body is: '$RES_BODY$';.&#10;    Assert that last response body  has field: &quot;$R_FIELD$&quot; with value: &quot;$R_VALUE$&quot;."
               description="Basic API test" toReformat="false" toShortenFQNames="true">
         <variable name="TEST_NAME" expression="camelCase(fileNameWithoutExtension())" defaultValue="" alwaysStopAt="true"/>
         <variable name="DESCRIPTION" expression="" defaultValue="" alwaysStopAt="true"/>
@@ -25,5 +26,4 @@
             <option name="api-tup" value="true"/>
         </context>
     </template>
-
 </templateSet>

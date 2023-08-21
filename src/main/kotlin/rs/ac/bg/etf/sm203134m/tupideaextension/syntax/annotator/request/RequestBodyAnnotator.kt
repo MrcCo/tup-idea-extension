@@ -3,7 +3,6 @@ package rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.lang.annotation.AnnotationHolder
-import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
@@ -14,55 +13,54 @@ import com.intellij.testFramework.MockProblemDescriptor
 import rs.ac.bg.etf.sm203134m.antlr4.TupLexer
 import rs.ac.bg.etf.sm203134m.antlr4.TupParser
 import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.PSIElementInitializer
+import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.base.RuleAnnotator
 
-class RequestBodyAnnotator : Annotator {
+class RequestBodyAnnotator : RuleAnnotator() {
 
     private var httpMethodsWithoutRequestBody = listOf("GET", "DELETE")
     private val httpMethodsWithRequestBody = listOf("POST", "PUT", "PATCH")
 
+    override fun getRule(): Int {
+        return TupParser.RULE_executeApiRequest
+    }
 
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    override fun doAnnotate(element: PsiElement, holder: AnnotationHolder) {
 
-        if (PSIElementInitializer.getRuleElementType(TupParser.RULE_executeApiRequest) == element.node.elementType) {
-
-            val requestMethodIfPresent = element.node.getChildren(
-                TokenSet.create(
-                    PSIElementInitializer.getRuleElementType(TupParser.RULE_request),
-                )
-            ).first().getChildren(
-                TokenSet.create(
-                    PSIElementInitializer.getRuleElementType(TupParser.RULE_httpMethod),
-                )
-            ).getOrNull(0)
-
-            val requestMethod = requestMethodIfPresent?.text ?: "GET"
-            val requestBodies = element.node.getChildren(
-                TokenSet.create(
-                    PSIElementInitializer.getRuleElementType(TupParser.RULE_requestBody),
-                )
+        val requestMethodIfPresent = element.node.getChildren(
+            TokenSet.create(
+                PSIElementInitializer.getRuleElementType(TupParser.RULE_request),
             )
-            val hasRequestBody = requestBodies.isNotEmpty()
+        ).first().getChildren(
+            TokenSet.create(
+                PSIElementInitializer.getRuleElementType(TupParser.RULE_httpMethod),
+            )
+        ).getOrNull(0)
 
-            if (hasRequestBody && httpMethodsWithoutRequestBody.contains(requestMethod)) {
-                val removalFix = RemoveRequestBodyQuickFix(requestBodies.first().psi)
-                holder.newAnnotation(
-                    HighlightSeverity.ERROR,
-                    "HTTP method $requestMethod does not have a request body."
-                )
-                    .range(element.textRange)
-                    .newLocalQuickFix(
-                        removalFix,
-                        MockProblemDescriptor(
-                            element, "Removing request body",
-                            ProblemHighlightType.ERROR, removalFix
-                        )
-                    ).registerFix().create()
+        val requestMethod = requestMethodIfPresent?.text ?: "GET"
+        val requestBodies = element.node.getChildren(
+            TokenSet.create(
+                PSIElementInitializer.getRuleElementType(TupParser.RULE_requestBody),
+            )
+        )
+        val hasRequestBody = requestBodies.isNotEmpty()
 
-                createReplaceFixes(holder, element, requestMethod)
-            }
+        if (hasRequestBody && httpMethodsWithoutRequestBody.contains(requestMethod)) {
+            val removalFix = RemoveRequestBodyQuickFix(requestBodies.first().psi)
+            holder.newAnnotation(
+                HighlightSeverity.ERROR,
+                "HTTP method $requestMethod does not have a request body."
+            )
+                .range(element.textRange)
+                .newLocalQuickFix(
+                    removalFix,
+                    MockProblemDescriptor(
+                        element, "Removing request body",
+                        ProblemHighlightType.ERROR, removalFix
+                    )
+                ).registerFix().create()
 
+            createReplaceFixes(holder, element, requestMethod)
         }
-
     }
 
     private fun createReplaceFixes(holder: AnnotationHolder, element: PsiElement, requestMethod: String) {
@@ -151,8 +149,10 @@ class ChangeRequestMethodBodyQuickFix(executeRequest: PsiElement, val from: Stri
         ).getOrNull(0)
 
         val psiFile = startElement.containingFile
-        if(requestMethodIfPresent == null) {
-            val urlString = requestDefinition.getChildren(TokenSet.create(PSIElementInitializer.getTokenElementType(TupLexer.STRING))).first()
+        if (requestMethodIfPresent == null) {
+            val urlString =
+                requestDefinition.getChildren(TokenSet.create(PSIElementInitializer.getTokenElementType(TupLexer.STRING)))
+                    .first()
             val start = urlString.startOffset - 1
             val range = TextRange(start, start)
             psiFile.viewProvider.document.replaceString(
@@ -168,10 +168,6 @@ class ChangeRequestMethodBodyQuickFix(executeRequest: PsiElement, val from: Stri
                 to
             )
         }
-
-
-
-
 
 
     }

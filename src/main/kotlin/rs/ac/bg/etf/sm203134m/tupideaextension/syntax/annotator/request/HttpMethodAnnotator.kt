@@ -3,27 +3,26 @@ package rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.lang.annotation.AnnotationHolder
-import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.testFramework.MockProblemDescriptor
 import rs.ac.bg.etf.sm203134m.antlr4.TupParser
-import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.PSIElementInitializer
+import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.base.RuleAnnotator
 
-class HttpMethodAnnotator : Annotator {
+class HttpMethodAnnotator : RuleAnnotator() {
 
     private val httpMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE")
 
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    override fun getRule(): Int {
+        return TupParser.RULE_httpMethod
+    }
 
-        if (PSIElementInitializer.getRuleElementType(TupParser.RULE_httpMethod) == element.node.elementType) {
+    override fun doAnnotate(element: PsiElement, holder: AnnotationHolder) {
 
-            if (!httpMethods.contains(element.node.text)) {
-                createFixes(element, holder)
-            }
-
+        if (!httpMethods.contains(element.node.text)) {
+            createFixes(element, holder)
         }
 
     }
@@ -49,7 +48,7 @@ class HttpMethodAnnotator : Annotator {
     }
 }
 
-class HttpMethodQuickFix(psiElement: PsiElement, private val httpMethod: String) :
+class HttpMethodQuickFix(private val psiElement: PsiElement, private val httpMethod: String) :
     LocalQuickFixOnPsiElement(psiElement) {
 
 
@@ -58,7 +57,7 @@ class HttpMethodQuickFix(psiElement: PsiElement, private val httpMethod: String)
     }
 
     override fun getText(): String {
-        return httpMethod
+        return "Replace ${psiElement.text} method with $httpMethod"
     }
 
     override fun invoke(

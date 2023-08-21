@@ -9,23 +9,28 @@ import org.apache.commons.validator.routines.UrlValidator
 import rs.ac.bg.etf.sm203134m.antlr4.TupLexer
 import rs.ac.bg.etf.sm203134m.antlr4.TupParser
 import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.PSIElementInitializer
+import rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.base.RuleAnnotator
 
-class UrlValidationAnnotator: Annotator {
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+class UrlValidationAnnotator : RuleAnnotator() {
 
-        if(PSIElementInitializer.getRuleElementType(TupParser.RULE_request) == element.node.elementType) {
+    override fun getRule(): Int {
+        return TupParser.RULE_request
+    }
 
-            val url = element.node.getChildren(TokenSet.create(
+    override fun doAnnotate(element: PsiElement, holder: AnnotationHolder) {
+
+        val url = element.node.getChildren(
+            TokenSet.create(
                 PSIElementInitializer.getTokenElementType(TupLexer.STRING)
-            )).first().text.substringAfter("\"").substringBefore("\"")
+            )
+        ).first().text.substringAfter("\"").substringBefore("\"")
 
-            if(!UrlValidator.getInstance().isValid(url)) {
-                holder.newAnnotation(HighlightSeverity.ERROR, "$url is not a valid URL.")
-                    .range(element.textRange)
-                    .create()
-            }
-
+        if (!UrlValidator.getInstance().isValid(url)) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "$url is not a valid URL.")
+                .range(element.textRange)
+                .create()
         }
+
 
     }
 }

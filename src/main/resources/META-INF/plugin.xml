@@ -52,7 +52,12 @@
         <annotator
                 language="TupLanguage"
                 implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.request.RequestBodyAnnotator"/>
-
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.BrowserListValidationAnnotator"/>
+        <annotator
+                language="TupLanguage"
+                implementationClass="rs.ac.bg.etf.sm203134m.tupideaextension.syntax.annotator.BrowserDefinitionAnnotator"/>
         <defaultLiveTemplates file="/liveTemplates/Tup.xml"/>
         <liveTemplateContext implementation="rs.ac.bg.etf.sm203134m.tupideaextension.template.UITestTemplate"/>
         <liveTemplateContext implementation="rs.ac.bg.etf.sm203134m.tupideaextension.template.ApiTestTemplate"/>
