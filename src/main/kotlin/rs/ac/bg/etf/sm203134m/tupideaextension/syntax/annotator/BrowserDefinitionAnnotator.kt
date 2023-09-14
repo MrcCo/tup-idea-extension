@@ -20,7 +20,7 @@ class BrowserDefinitionAnnotator : RuleAnnotator() {
 
     override fun doAnnotate(element: PsiElement, holder: AnnotationHolder) {
 
-        val steps = element.parent.parent.node.getChildren(
+        val steps = element.parent.node.getChildren(
             TokenSet.create(
                 PSIElementInitializer.getRuleElementType(TupParser.RULE_testSteps)
             )
